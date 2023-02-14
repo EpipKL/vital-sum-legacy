@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vital Sum</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body class="bg-light">
+
+<!-- Navigation Bar -->
+<nav class="navbar bg-dark">
+    <form class="container-fluid">
+        <a class="navbar-brand text-light">Vital Sum</a>
+        <button id="playerMenuBtn" type="button" class="btn btn-primary"
+        type="button" data-bs-toggle="modal" data-bs-target="#playerMenu"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+              </svg>
+              Players
+        </button>
+    </form>
+</nav>
+
+  <!-- Player Menu Modal -->
+  <div class="modal fade" id="playerMenu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Players</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Player Menu Modal Body -->
+        <div class="modal-body">
+          <div class="row text-center">
+            <div id="playerOneDmgLoss" class="col">
+              <p>-</p>
+            </div>
+            <div class="col">
+              <p>Player 1</p>
+            </div>
+            <div class="col text-danger">
+              DMG <p id="playerOneDmg" class="text-black"></p>
+            </div>
+            <div id="playerOneDmgGain" class="col">
+              <p>+</p>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div id="playerTwoDmgLoss" class="col">
+              <p>-</p>
+            </div>
+            <div class="col">
+              <p>Player 2</p>
+            </div>
+            <div class="col text-danger">
+              DMG <p id="playerTwoDmg" class="text-black">0</p>
+            </div>
+            <div id="playerTwoDmgGain" class="col">
+              <p>+</p>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div id="playerThreeDmgLoss" class="col">
+              <p>-</p>
+            </div>
+            <div class="col">
+              <p>Player 3</p>
+            </div>
+            <div class="col text-danger">
+              DMG <p id="playerThreeDmg" class="text-black"></p>
+            </div>
+            <div id="playerThreeDmgGain" class="col">
+              <p>+</p>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div id="playerFourDmgLoss" class="col">
+              <p>-</p>
+            </div>
+            <div class="col">
+              <p>Player 4</p>
+            </div>
+            <div class="col text-danger">
+              DMG <p id="playerFourDmg" class="text-black"></p>
+            </div>
+            <div id="playerFourDmgGain" class="col">
+              <p>+</p>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+            <button id="addPlayer" type="button" class="btn btn-info click">Add Player</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Life Box -->
+<div id="lifeBox" class="bg-light position-relative">
+            <div class="position-absolute top-50 start-50 translate-middle"><h1 id="life" class="display-1"></h1></div>
+    <div class="container-fluid position-relative">
+
+        <div class="row">
+            <div id="lifeLoss" class="col text-start">
+                <h1 id="lifeMinus" class="display-2" style="opacity: 100%;">-</h1>
+            </div>
+            <div id="lifeGain" class="col text-end">
+                <h1 id="lifePlus" class="display-2" style="opacity: 100%;">+</h1>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Mana Box -->
+<div id="manaBox">
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- White Icon -->
+            <div id="modalWhite" class="col text-center" style="background-color: white;"
+            type="button" data-bs-toggle="modal" data-bs-target="#whiteManaModal">
+                <p id="whiteValue"></p>
+                <img src="/mana-icons/W(Non MTG).svg" class="img-fluid" alt="white">
+            </div>
+            <!-- Blue Icon -->
+            <div id="modalBlue" class="col text-center" style="background-color: lightskyblue;"
+            type="button" data-bs-toggle="modal" data-bs-target="#blueManaModal">
+                <p id="blueValue"></p>
+                <img src="/mana-icons/U(Non MTG).svg" class="img-fluid" alt="blue">
+            </div>
+            <!-- Black Icon -->
+            <div id="modalBlack" class="col text-center" style="background-color: lightgray;"
+            type="button" data-bs-toggle="modal" data-bs-target="#blackManaModal">
+                <p id="blackValue"></p>
+                <img src="/mana-icons/B(Non MTG).svg" class="img-fluid" alt="black">
+            </div>
+            <!-- Red Icon -->
+            <div id="modalRed" class="col text-center" style="background-color: salmon;"
+            type="button" data-bs-toggle="modal" data-bs-target="#redManaModal">
+                <p id="redValue"></p>
+                <img src="/mana-icons/R(Non MTG).svg" class="img-fluid" alt="red">
+            </div>
+            <!-- Green Icon -->
+            <div id="modalGreen" class="col text-center" style="background-color: lightgreen;"
+            type="button" data-bs-toggle="modal" data-bs-target="#greenManaModal">
+                <p id="greenValue"></p>
+                <img src="/mana-icons/G(Non MTG).svg" class="img-fluid" alt="green">
+            </div>
+            <!-- Colorless Icon -->
+            <div class="col text-center"
+            type="button" data-bs-toggle="modal" data-bs-target="#colorlessManaModal"
+            >
+                <p id="colorlessValue"></p>
+                <img src="/mana-icons/Colorless.svg" class="img-fluid" alt="colorless">
+            </div>
+            <!-- Storm Icon-->
+            <div id="modalStorm" class="col text-center" style="background-color: lavender;"
+            type="button" data-bs-toggle="modal" data-bs-target="#stormCountModal"
+            >
+                <p id="stormCountValue"></p>
+                <img src="/mana-icons/Storm(Non MTG).svg" class="img-fluid" alt="storm">
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<!-- Reset Mana Button -->
+<button id="manaResetBtn" type="button" class="btn btn-warning">
+    Reset Mana
+  </button>
+  
+  <!-- Modals -->
+
+  <!-- White Mana Modal -->
+  <div class="modal fade" id="whiteManaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">White Mana</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- White Mana Modal Body -->
+        <div class="modal-body">
+            <div class="row text-center">
+                <div id="whiteValueLoss" class="col bg-danger text-light">
+                    <p>-</p>
+                </div>
+                <div class="col">
+                    <p id="whiteValueModal"></p>
+                </div>
+                <div id="whiteValueGain" class="col bg-success text-light">
+                    <p>+</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="whiteManaReset" type="button" class="btn btn-warning click">Reset</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Blue Mana Modal -->
+<div class="modal fade" id="blueManaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Blue Mana</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Blue Mana Modal Body -->
+        <div class="modal-body">
+            <div class="row text-center">
+                <div id="blueValueLoss" class="col bg-danger text-light">
+                    <p>-</p>
+                </div>
+                <div class="col">
+                    <p id="blueValueModal"></p>
+                </div>
+                <div id="blueValueGain" class="col bg-success text-light">
+                    <p>+</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="blueManaReset" type="button" class="btn btn-warning click">Reset</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Black Mana Modal -->
+<div class="modal fade" id="blackManaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Black Mana</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Black Mana Modal Body -->
+        <div class="modal-body">
+            <div class="row text-center">
+                <div id="blackValueLoss" class="col bg-danger text-light">
+                    <p>-</p>
+                </div>
+                <div class="col">
+                    <p id="blackValueModal"></p>
+                </div>
+                <div id="blackValueGain" class="col bg-success text-light">
+                    <p>+</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="blackManaReset" type="button" class="btn btn-warning click">Reset</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Red Mana Modal -->
+<div class="modal fade" id="redManaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Red Mana</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Red Mana Modal Body -->
+        <div class="modal-body">
+            <div class="row text-center">
+                <div id="redValueLoss" class="col bg-danger text-light">
+                    <p>-</p>
+                </div>
+                <div class="col">
+                    <p id="redValueModal"></p>
+                </div>
+                <div id="redValueGain" class="col bg-success text-light">
+                    <p>+</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="redManaReset" type="button" class="btn btn-warning click">Reset</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Green Mana Modal -->
+<div class="modal fade" id="greenManaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Green Mana</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Green Mana Modal Body -->
+        <div class="modal-body">
+            <div class="row text-center">
+                <div id="greenValueLoss" class="col bg-danger text-light">
+                    <p>-</p>
+                </div>
+                <div class="col">
+                    <p id="greenValueModal"></p>
+                </div>
+                <div id="greenValueGain" class="col bg-success text-light">
+                    <p>+</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="greenManaReset" type="button" class="btn btn-warning click">Reset</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Colorless Mana Modal -->
+<div class="modal fade" id="colorlessManaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Colorless Mana</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Colorless Mana Modal Body -->
+        <div class="modal-body">
+            <div class="row text-center">
+                <div id="colorlessValueLoss" class="col bg-danger text-light">
+                    <p>-</p>
+                </div>
+                <div class="col">
+                    <p id="colorlessValueModal"></p>
+                </div>
+                <div id="colorlessValueGain" class="col bg-success text-light">
+                    <p>+</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="colorlessManaReset" type="button" class="btn btn-warning click">Reset</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- Storm Count Modal -->
+<div class="modal fade" id="stormCountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Storm Count</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Storm Count Modal Body -->
+        <div class="modal-body">
+            <div class="row text-center">
+                <div id="stormCountLoss" class="col bg-danger text-light">
+                    <p>-</p>
+                </div>
+                <div class="col">
+                    <p id="stormCountValueModal"></p>
+                </div>
+                <div id="stormCountGain" class="col bg-success text-light">
+                    <p>+</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="stormCountReset" type="button" class="btn btn-warning click">Reset</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
